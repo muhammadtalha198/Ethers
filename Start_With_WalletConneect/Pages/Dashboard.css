@@ -1,0 +1,88 @@
+/* src/Dashboard.css */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+}
+
+.wallet-button {
+  padding: 10px 20px;
+  background-color: #555;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar button {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 10px;
+  justify-content: space-around;
+  align-content: start;
+}
+
+.price-box {
+  width: calc(20% - 20px);
+  padding: 20px;
+  background-color: #f4f4f4;
+  text-align: center;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.price-form {
+  width: calc(100% - 20px);
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.price-form input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.price-form button {
+  padding: 10px 20px;
+  background-color: #555;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
