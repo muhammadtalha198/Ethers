@@ -18,24 +18,24 @@ const Dashboard = ({ setCurrentPage }) => {
   const [totalInvestment, setTotalInvestment] = useState(0);
   const [tusryPoolAmount, setTusryPoolAmount] = useState(0);
   const [ownrPoolAmount, setOwnrPoolAmount] = useState(0);
-  const [totalPoolCap, setTotalPoolCap] = useState("0");
-  const [tsryPoolPrcntg, setTsryPoolPrcntg] = useState("0");
+  const [totalPoolCap, setTotalPoolCap] = useState(0);
+  const [tsryPoolPrcntg, setTsryPoolPrcntg] = useState(0);
   const [ownrPoolprcntg, setOwnrPoolprcntg] = useState(0);
-  const [balance, setBalance] = useState("0");
-  const [tokenbalance, setTookenBalance] = useState("0");
+  const [balance, setBalance] = useState(0);
+  const [tokenbalance, setTookenBalance] = useState(0);
 
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
 
   useEffect(() => {
     const fetchBalance = async () => {
-      if (!isConnected) throw Error("User disconnected");
+      // if (!isConnected) throw Error("User disconnected");
 
       const ethersProvider = new BrowserProvider(walletProvider);
 
       const balance = await ethersProvider.getBalance(address);
       const balanceInEther = formatUnits(balance);
-      setBalance(balanceInEther);
+      setBalance(Number(balanceInEther).toFixed(2));
 
       // The Contract object
       const signer = await ethersProvider.getSigner();
@@ -46,35 +46,36 @@ const Dashboard = ({ setCurrentPage }) => {
       const USDTBalance = await USDTContract.balanceOf(address);
       const USDTBalanceInEther = formatUnits(USDTBalance);
 
-      setTookenBalance(USDTBalanceInEther);
+      setTookenBalance(Number(USDTBalanceInEther).toFixed(2));
 
       const totalInvestment = await PoolContract.totalStakedAmount();
       const totalInvestmentInEther = formatUnits(totalInvestment);
 
-      setTotalInvestment(totalInvestmentInEther);
+      setTotalInvestment(Number(totalInvestmentInEther).toFixed(2));
 
-      const tusryPoolAmount = await PoolContract.totalStakedAmount();
+      const tusryPoolAmount = await PoolContract.treasuryPoolAmount();
       const tusryPoolAmountInEther = formatUnits(tusryPoolAmount);
 
-      setTusryPoolAmount(tusryPoolAmountInEther);
+      setTusryPoolAmount(Number(tusryPoolAmountInEther).toFixed(2));
 
-      const ownrPoolAmount = await PoolContract.totalStakedAmount();
+      const ownrPoolAmount = await PoolContract.ownerShipPoolAmount();
       const ownrPoolAmountInEther = formatUnits(ownrPoolAmount);
 
-      setOwnrPoolAmount(ownrPoolAmountInEther);
+      setOwnrPoolAmount(Number(ownrPoolAmountInEther).toFixed(2));
 
       const totalPoolCap = await PoolContract.totalStakedAmount();
       const totalPoolCapInEther = formatUnits(totalPoolCap);
 
-      setTotalPoolCap(totalPoolCapInEther);
+      setTotalPoolCap(Number(totalPoolCapInEther).toFixed(2));
 
-      const tsryPoolPrcntg = await PoolContract.totalStakedAmount();
+      let tsryPoolPrcntg = await PoolContract.tdividentPayoutPercentage();
+      tsryPoolPrcntg = Number(tsryPoolPrcntg);
 
-      setTsryPoolPrcntg(tsryPoolPrcntg);
+      setTsryPoolPrcntg(tsryPoolPrcntg / 100);
 
-      const ownrPoolprcntg = await PoolContract.totalStakedAmount();
-
-      setOwnrPoolprcntg(ownrPoolprcntg);
+      let ownrPoolprcntg = await PoolContract.odividentPayoutPercentage();
+      ownrPoolprcntg = Number(ownrPoolprcntg);
+      setOwnrPoolprcntg(ownrPoolprcntg / 100);
     };
 
     fetchBalance();
@@ -102,7 +103,7 @@ const Dashboard = ({ setCurrentPage }) => {
           <div className="price-box">tsryPoolPrcntg = {tsryPoolPrcntg}%</div>
           <div className="price-box">ownrPoolprcntg = {ownrPoolprcntg}%</div>
           <div className="price-box">walletBalance = {balance} ETh</div>
-          <div className="price-box">tokenbalance = {tokenbalance} ETh</div>
+          <div className="price-box">tokenbalance = {tokenbalance} Tokens</div>
         </main>
       </div>
     </div>
